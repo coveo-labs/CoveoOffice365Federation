@@ -1,0 +1,132 @@
+<div id="search" class="CoveoSearchInterface" data-enable-history="true" data-design="new">
+
+  <!-- BEGIN External libraries -->
+  <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="//kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
+  <script src="//unpkg.com/@microsoft/microsoft-graph-client@1.0.0/lib/graph-js-sdk-web.js"></script>
+  <!-- END External libraries -->
+
+  <!-- error message -->
+  <div id="error-display" class="page panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title" id="error-name"></h3>
+    </div>
+    <div class="panel-body">
+      <pre><code id="error-desc"></code></pre>
+    </div>
+  </div>
+  <div class="coveo-tab-section">
+    <a class="CoveoTab" data-id="All" data-caption="All Content"></a>
+    <a class="CoveoTab" data-id="Email" data-caption="Email" data-expression="NOT @uri"></a>
+    <a class="CoveoTab" data-id="Chatter" data-caption="Chatter" data-expression="@objecttype==(FeedItem,FeedComment)"></a>
+    <a class="CoveoTab" data-id="Salesforce" data-caption="Salesforce" data-expression="@sfid"></a>
+    <a class="CoveoTab" data-id="SalesforceCase" data-caption="Cases" data-expression="@sfcaseid"></a>
+    <a class="CoveoTab" data-id="SharePoint" data-caption="SharePoint" data-expression="@connectortype==SharePoint OR @connectortype==SharepointCrawler"></a>
+    <a class="CoveoTab" data-id="YouTube" data-caption="YouTube" data-expression="@filetype==&quot;youtubevideo&quot;"></a>
+  </div>
+  <div class="coveo-search-section">
+    <div class="CoveoSettings"></div>
+    <div class="CoveoSearchbox" data-enable-omnibox="true"></div>
+  </div>
+  <div class="coveo-main-section">
+    <div class="coveo-facet-column">
+      <div class="CoveoFacet" data-title="Type" data-field="@objecttype" data-tab="All"></div>
+      <div class="CoveoFacet" data-title="FileType" data-field="@filetype" data-tab="All"></div>
+      <div class="CoveoFacet" data-title="Author" data-field="@author" data-tab="All"></div>
+      <div class="CoveoFacet" data-title="Year" data-field="@year" data-tab="All"></div>
+      <div class="CoveoFacet" data-title="Month" data-field="@month" data-tab="All"></div>
+      <div class="CoveoFacet" data-title="Posted on" data-tab="Chatter" data-field="@sfparentname"></div>
+      <div class="CoveoFacet" data-title="Posted by" data-tab="Chatter" data-field="@sfcreatedbyname"></div>
+      <div class="CoveoFacet" data-title="Topic" data-tab="Chatter" data-field="@coveochatterfeedtopics"></div>
+      <div class="CoveoFacet" data-title="Liked by" data-tab="Chatter" data-field="@sflikedby"></div>
+      <div class="CoveoFacet" data-title="Type" data-field="@objecttype" data-number-of-values="5" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Close quarter" data-field="@sfopportunityclosedquarterc" data-computed-field="@sfopportunityamountconverted"
+        data-sort-criteria="AlphaDescending" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Salesforce Account" data-field="@sfaccountname" data-computed-field="@sfopportunityamountconverted"
+        data-sort-criteria="ComputedFieldDescending" data-number-of-values="7" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Salesforce Owner" data-field="@sfownername" data-computed-field="@sfopportunityamountconverted"
+        data-sort-criteria="ComputedFieldDescending" data-number-of-values="7" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Opportunity Type" data-field="@sfopportunitytype" data-computed-field="@sfopportunityamountconverted"
+        data-sort-criteria="ComputedFieldDescending" data-number-of-values="5" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Opportunity Stage" data-field="@sfopportunitystagename" data-computed-field="@sfopportunityamountconverted"
+        data-sort-criteria="ComputedFieldDescending" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Lead Source" data-field="@sfleadsource" data-computed-field="@sfopportunityamountconverted"
+        data-sort-criteria="ComputedFieldDescending" data-number-of-values="5" data-tab="Salesforce"></div>
+      <div class="CoveoFacet" data-title="Type" data-field="@objecttype" data-tab="SalesforceCase"></div>
+      <div class="CoveoFacet" data-title="Case Status" data-field="@sfcasestatus" data-tab="SalesforceCase"></div>
+      <div class="CoveoFacet" data-title="Case Priority" data-field="@sfcasespriority" data-tab="SalesforceCase"></div>
+      <div class="CoveoFacet" data-title="Account" data-field="@sfaccountname" data-tab="SalesforceCase"></div>
+      <div class="CoveoFacet" data-title="Owner" data-field="@sfownername" data-tab="SalesforceCase"></div>
+      <div class="CoveoFacet" data-title="File Type" data-field="@filetype" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Item Type" data-field="@spitemtype" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Parent" data-field="@spparentname" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="List Name" data-field="@splistname" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Site" data-field="@spsitename" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Author" data-field="@author" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Year" data-field="@year" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Month" data-field="@month" data-tab="SharePoint"></div>
+      <div class="CoveoFacet" data-title="Author" data-field="@author" data-tab="YouTube"></div>
+      <div class="CoveoFacet" data-title="Year" data-field="@year" data-tab="YouTube"></div>
+      <div class="CoveoFacet" data-title="Month" data-field="@month" data-tab="YouTube"></div>
+      <div class="CoveoFacet" data-title="From" data-field="@from" data-tab="Email"></div>
+      <div class="CoveoFacet" data-title="To" data-field="@to" data-tab="Email"></div>
+      <div class="CoveoFacet" data-title="With Attachment" data-field="@withattach" data-tab="Email"></div>
+
+    </div>
+    <div class="coveo-results-column">
+      <div class="CoveoShareQuery"></div>
+      <div class="CoveoPreferencesPanel">
+        <div class="CoveoResultsPreferences"></div>
+        <div class="CoveoResultsFiltersPreferences"></div>
+      </div>
+      <div class="CoveoTriggers"></div>
+      <div class="CoveoBreadcrumb"></div>
+
+      <div class="coveo-results-header">
+        <div class="coveo-summary-section">
+          <span class="CoveoQuerySummary"></span>
+          <span class="CoveoQueryDuration"></span>
+        </div>
+        <div class="coveo-result-layout-section">
+          <span class="CoveoResultLayout"></span>
+        </div>
+        <div class="coveo-sort-section">
+          <span class="CoveoSort" data-sort-criteria="relevancy" data-caption="Relevance"></span>
+          <span class="CoveoSort" data-sort-criteria="date descending,date ascending" data-caption="Date"></span>
+          <span class="CoveoSort" data-sort-criteria="@sfopportunityamountconverted descending,@sfopportunityamountconverted ascending"
+            data-tab="Salesforce" data-caption="Amount"></span>
+        </div>
+      </div>
+      <div class="CoveoHiddenQuery"></div>
+      <div class="CoveoDidYouMean"></div>
+      <div class="CoveoErrorReport" data-pop-up="false"></div>
+      <div id="federatedHint">A Federated search against Office 365 email messages will be executed.
+        <br>Search Email top messages (and attachments). No attachments are retrieved.
+      </div>
+
+      <div id="federatedEmail" style="text-align: left;padding:5px">
+        <div id="inbox-status" class="panel-body"></div>
+      </div>
+
+
+      <template id="EmailChildResult" />
+
+      <div class="CoveoResultList" data-layout="list" data-wait-animation="fade" data-auto-select-fields-to-include="true">
+        <template id="Chatter" />
+        <template id="SalesforceCase" />
+        <template id="SharePointList" />
+        <template id="Salesforce" />
+        <template id="SharePoint" />
+        <template id="YouTubePlaylistItem" />
+        <template id="YouTubeVideo" />
+        <template id="EmailThread" />
+        <template id="Default" />
+      </div>
+
+      <div class="CoveoPager"></div>
+      <div class="CoveoLogo"></div>
+      <div class="CoveoResultsPerPage"></div>
+    </div>
+
+  </div>
+</div>

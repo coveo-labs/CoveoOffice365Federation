@@ -1,0 +1,34 @@
+<script id="EmailChildResult" class="result-template" type="text/html">
+<div class="coveo-result-frame coveo-email-result" style="font-size: 80%;">
+  <div class="coveo-result-row">
+    <div class="coveo-result-cell" style="width:56px; text-align:center; padding-top:7px">
+      <span class="CoveoIcon" data-small='true'></span>
+      <span class="CoveoMyQuick"></span>
+    </div>
+    <div class="coveo-result-cell" style="padding-left:15px">
+      <div class="coveo-result-row">
+        <div class="coveo-result-cell" style="font-size:18px">
+          <a class="CoveoResultLink"></a>
+        </div>
+        <div class="coveo-result-cell" style="width:120px; text-align:right; font-size:12px">
+          <span class="CoveoFieldValue" data-field="@date" data-helper="emailDateTime"></span>
+        </div>
+      </div>
+      <div class="coveo-result-row">
+        <div class="coveo-result-cell" style="font-size:13px;padding-top:5px;padding-bottom:5px;">
+          <span class="CoveoText" data-value="From:"></span>
+          <span class="CoveoFieldValue" data-field="@from" data-helper="email" data-html-value="true"></span>
+          <span class="CoveoText" data-value="To:"></span>
+          <span class="CoveoFieldValue" data-field="@recipients" data-helper="email" data-html-value="true"></span>
+        </div>
+      </div>
+      <div class="coveo-result-row">
+        <div class="coveo-result-cell" style="padding-top:5px; padding-bottom:5px">
+          <span class="CoveoExcerpt"></span>
+          <span class="CoveoMyAttachment"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
